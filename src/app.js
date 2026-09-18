@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const estudianteRoutes = require('./routes/estudiante.routes');
 const cursoRoutes = require('./routes/curso.routes');
@@ -10,12 +11,14 @@ const app = express();
 // Configuración de CORS
 const corsOptions = {
   origin: process.env.CLIENT_URL || '*', // O especifica tu frontend (ej: 'http://localhost:5173')
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-use-cookie']
 };
 
 app.use(cors(corsOptions)); // Aplicar CORS globalmente
 app.use(express.json());
+app.use(cookieParser());
 
 // Registro de Rutas
 app.use('/api/usuarios', usuarioRoutes);
