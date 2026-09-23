@@ -9,21 +9,9 @@ const usuarioRoutes = require('./routes/usuario.routes');
 const app = express();
 
 // 1. Configuración de CORS
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://oscarito1600.github.io',
-  process.env.CLIENT_URL
-].filter(Boolean);
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Bloqueado por política de CORS'));
-    }
-  },
-  credentials: true,
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  credentials: true, // Permite el envío de cookies/encabezados de autenticación
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-use-cookie']
 };
